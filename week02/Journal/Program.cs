@@ -24,11 +24,13 @@ class Program
                 Console.WriteLine(prompt);
                 Console.Write("> ");
                 string response = Console.ReadLine();
+                //i chose to save the files using JSON, which I had to change the date, promp & response
+                //from private fields to public properties which is what ghd json system uses to serialize.
                 Entry entry = new Entry
                 {
-                    _date = DateTime.Now.ToString("MM/dd/yyyy"),
-                    _prompt = prompt,
-                    _response = response
+                    Date = DateTime.Now.ToString("MM/dd/yyyy"),
+                    Prompt = prompt,
+                    Response = response
                 };
                 journal.AddEntry(entry);
             }

@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 
 public class Journal
 {
@@ -19,29 +20,20 @@ public class Journal
 
     public void SaveToFile(string filename)
     {
-        using (StreamWriter writer = new StreamWriter(filename))
-        {
-            foreach (Entry entry in _entries)
-            {
-                writer.WriteLine($"{entry._date}|{entry._prompt}|{entry._response}");
-            }
-        }
+        string jsonString = JsonSerializer.Serialize(_entries, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(filename, jsonString);
     }
 
     public void LoadFromFile(string filename)
     {
-        _entries.Clear();
-        string[] lines = File.ReadAllLines(filename);
-        foreach (string line in lines)
+        if (File.Exists(filename))
         {
-            string[] parts = line.Split('|');
-            Entry entry = new Entry
-            {
-                _date = parts[0],
-                _prompt = parts[1],
-                _response = parts[2]
-            };
-            _entries.Add(entry);
+            string jsonString = File.ReadAllText(filename);
+            _entries = JsonSerializer.Deserialize<List<Entry>>(jsonString);
+        }
+        else
+        {
+            Console.WriteLine("File not found.");
         }
     }
 }
