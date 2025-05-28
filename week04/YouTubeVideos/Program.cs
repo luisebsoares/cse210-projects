@@ -39,7 +39,7 @@ class Program
             Console.WriteLine($"Views: {video.Views}");
             Console.WriteLine($"Likes: {video.Likes}");
             Console.WriteLine($"Dislikes: {video.Dislikes}");
-            Console.WriteLine($"Number of Comments: {video.GetNumberOfComments()}"); ;
+            Console.WriteLine($"Comments: {video.GetNumberOfComments()}"); ;
 
             foreach (var comment in video.GetComments())
             {
